@@ -19,8 +19,8 @@ class CreateProductsTable extends Migration
             $table->double('product_price');
             $table->text('product_description')->nullable();
             $table->integer('quantity');
-            $table->foreignId('category_id')->constrained('category')->onDelete('cascade');
-            $table->foreignId('pharmacy_id')->constrained('pharmacy')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->foreignId('pharmacy_id')->constrained('pharmacies')->onDelete('cascade');
             $table->timestamps();
         });
     }

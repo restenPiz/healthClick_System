@@ -15,12 +15,10 @@ class CreatePharmaciesTable extends Migration
     {
         Schema::create('pharmacies', function (Blueprint $table) {
             $table->id();
-            $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('pharmacy_name');
             $table->string('pharmacy_location');
             $table->text('pharmacy_description')->nullable();
-            $table->timestamps();
             $table->timestamps();
         });
     }
