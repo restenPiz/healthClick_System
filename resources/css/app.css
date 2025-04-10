@@ -1,8 +1,4 @@
-@import '../../vendor/livewire/flux/dist/flux.css';
 @tailwind base;
 @tailwind components;
-@tailwind utilities; 
+@tailwind utilities;
 
-@theme {
-    --font-sans: Inter, sans-serif;
-}

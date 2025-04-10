@@ -8,6 +8,7 @@ class PaymentMethods extends Component
 {
     public function render()
     {
-        return view('livewire.payment-methods');
+        return view('livewire.payment-methods')
+            ->layout('layouts.app');
     }
 }

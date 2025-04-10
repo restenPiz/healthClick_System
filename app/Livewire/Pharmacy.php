@@ -8,6 +8,7 @@ class Pharmacy extends Component
 {
     public function render()
     {
-        return view('livewire.pharmacy');
+        return view('livewire.pharmacy')
+            ->layout('layouts.app');
     }
 }
