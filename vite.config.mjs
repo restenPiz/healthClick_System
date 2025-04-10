@@ -11,4 +11,7 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    build: {
+        target: 'esnext', // ou o navegador mais recente que você preferir
+    },
 });
