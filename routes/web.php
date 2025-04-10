@@ -6,8 +6,10 @@ use App\Livewire\Product;
 use App\Livewire\User;
 use App\Models\PaymentMethod;
 use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
 
-Route::view('/', 'welcome');
+Volt::route('/', 'pages.auth.login')
+    ->name('login');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

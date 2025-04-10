@@ -1,8 +1,14 @@
 <div>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Product') }}
-        </h2>
+        <div class="flex items-center justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Product') }}
+            </h2>
+            <a href=""
+                class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-indigo-700 transition">
+                + Add Product
+            </a>
+        </div>
     </x-slot>
 
     {{-- ?Start the main content --}}
@@ -32,6 +38,7 @@
                             <th
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                 Stock</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -43,6 +50,21 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">300MT</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">120</td>
+                            <td>
+                                <div class="mt-4 flex items-center space-x-4">
+                                    <a href=""
+                                        class="text-yellow-500 hover:underline dark:text-yellow-400">
+                                        Edit
+                                    </a>
+                                    <form action="" method="POST" onsubmit="return confirm('Tens certeza que desejas eliminar?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-600 hover:underline dark:text-red-400">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">2</td>
@@ -52,6 +74,21 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">500MT</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">50</td>
+                            <td>
+                                <div class="mt-4 flex items-center space-x-4">
+                                    <a href=""
+                                        class="text-yellow-500 hover:underline dark:text-yellow-400">
+                                        Edit
+                                    </a>
+                                    <form action="" method="POST" onsubmit="return confirm('Tens certeza que desejas eliminar?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-600 hover:underline dark:text-red-400">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
                         </tr>
                         <!-- Adiciona mais linhas conforme necessário -->
                     </tbody>

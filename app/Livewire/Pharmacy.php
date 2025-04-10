@@ -8,7 +8,8 @@ class Pharmacy extends Component
 {
     public function render()
     {
-        return view('livewire.pharmacy')
+        $pharmacies = Pharmacy::all();
+        return view('livewire.pharmacy', compact('pharmacies'))
             ->layout('layouts.app');
     }
 }
