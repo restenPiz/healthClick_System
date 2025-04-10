@@ -8,19 +8,16 @@ return [
     'roles_structure' => [
         'admin' => [
             'users' => 'c,r,u,d',
-            'payments' => 'c,r,u,d',
             'products' => 'c,r,u,d',
-            'sales' => 'c,r,u,d',
-            'orders' => 'c,r,u,d',
-            'pharmacy' => 'c,r,u,d',
+            'payment_methods' => 'c,r,u,d',
+            'orders' => 'r,u',
             'profile' => 'r,u',
         ],
         'pharmacy' => [
-            'users' => 'r,d',
             'profile' => 'r,u',
-            'orders' => 'c,r,u,d',
             'products' => 'c,r,u,d',
-            'sales' => 'c,r,u,d',
+            'payment_methods' => 'r',
+            'orders' => 'r,u',
         ],
     ],
 

@@ -3,20 +3,22 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
+        // User::factory(10)->create();
         $this->call(LaratrustSeeder::class);
-        // \App\Models\User::factory(10)->create();
-        $user = User::create([
+
+        $user = User::factory()->create([
             'name' => 'Mauro Peniel',
             'email' => 'admin@gmail.com',
-            'password' => Hash::make('admin@123'),
+            'password' => 'admin@123',
         ]);
+
         $user->addRole('admin');
     }
 }
