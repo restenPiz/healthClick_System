@@ -65,7 +65,7 @@
         <!--**********************************
             Nav header start
         ***********************************-->
-        <div class="nav-header">
+        <div class="nav-header" style="background-color:green">
             <a href="index.html" class="brand-logo">
                 <svg class="logo-abbr" width="40" height="40" viewBox="0 0 48 54" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
@@ -345,7 +345,7 @@
         <!--**********************************
             Sidebar start
         ***********************************-->
-        <div class="dlabnav">
+        <div class="dlabnav" style="background-color:green">
             <div class="dlabnav-scroll">
                 <ul class="metismenu" id="menu">
                     {{--?Dashboard--}}
@@ -404,8 +404,10 @@
     <script src="js/dlabnav-init.js"></script>
     <script src="js/demo.js"></script>
     <script src="js/styleSwitcher.js"></script>
-
-
+    
+    <script src="js/dashboard/dashboard-2.js"></script>
+	<script src="vendor/chart.js/Chart.bundle.min.js"></script>
+	<!-- Apex Chart -->
+	<script src="vendor/apexchart/apexchart.js"></script>
 </body>
-
 </html>
