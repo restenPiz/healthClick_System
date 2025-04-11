@@ -50,10 +50,6 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">120</td>
                             <td>
                                 <div class="mt-4 flex items-center space-x-4">
-                                    <a href=""
-                                        class="text-yellow-500 hover:underline dark:text-yellow-400">
-                                        Edit
-                                    </a>
                                     <form action="" method="POST" onsubmit="return confirm('Tens certeza que desejas eliminar?');">
                                         @csrf
                                         @method('DELETE')
@@ -74,10 +70,6 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">50</td>
                             <td>
                                 <div class="mt-4 flex items-center space-x-4">
-                                    <a href=""
-                                        class="text-yellow-500 hover:underline dark:text-yellow-400">
-                                        Edit
-                                    </a>
                                     <form action="" method="POST" onsubmit="return confirm('Tens certeza que desejas eliminar?');">
                                         @csrf
                                         @method('DELETE')
