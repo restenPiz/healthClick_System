@@ -14,7 +14,7 @@ class CreatePharmaciesTable extends Migration
             $table->string('pharmacy_name');
             $table->string('pharmacy_location');
             $table->string('pharmacy_contact');
-            $table->string('pharmacy_file');
+            $table->string('pharmacy_file')->nullable();
             $table->text('pharmacy_description')->nullable();
             $table->timestamps();
         });
