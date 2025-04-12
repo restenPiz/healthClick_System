@@ -44,13 +44,11 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
     {{--?Modal to add Pharmacy--}}
-    <x-modal class="modal fade {{ $showModal ? 'show' : '' }}"
-    name="add-pharmacy" :show="$errors->isNotEmpty()" focusable>
+    <x-modal name="add-pharmacy" :show="$errors->isNotEmpty()" focusable>
         <form wire:submit.prevent="save" class="p-6">
             <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
                 {{ __('Add New Pharmacy') }}
@@ -142,11 +140,6 @@
             </div>
         </form>
     </x-modal>
-     
-    <!-- Overlay do modal -->
-    @if($showModal)
-    <div class="modal-backdrop fade show"></div>
-    @endif
 
     {{--?Script--}}
     <script>

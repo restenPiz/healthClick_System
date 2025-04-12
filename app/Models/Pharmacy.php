@@ -9,7 +9,14 @@ class Pharmacy extends Model
 {
     use HasFactory;
     protected $table = 'pharmacies';
-    protected $fillable = ['user_id', 'pharmacy_name', 'pharmacy_location', 'pharmacy_description'];
+    protected $fillable = [
+        'user_id',
+        'pharmacy_name',
+        'pharmacy_contact',
+        'pharmacy_file',
+        'pharmacy_location',
+        'pharmacy_description'
+    ];
 
     public function user()
     {

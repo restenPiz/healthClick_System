@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreatePharmaciesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('pharmacies', function (Blueprint $table) {
@@ -18,16 +13,13 @@ class CreatePharmaciesTable extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('pharmacy_name');
             $table->string('pharmacy_location');
+            $table->string('pharmacy_contact');
+            $table->string('pharmacy_file');
             $table->text('pharmacy_description')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('pharmacies');

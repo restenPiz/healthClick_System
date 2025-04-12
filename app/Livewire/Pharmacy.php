@@ -71,9 +71,7 @@ class Pharmacy extends Component
             'pharmacy_description',
         ]);
 
-        $this->showModal = false;
-
-        $this->dispatch('close-modal');
+        $this->dispatch('close-modal', 'add-pharmacy');
 
         toast('Pharmacy added with successfuly', 'success');
     }
