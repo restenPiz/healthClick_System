@@ -15,15 +15,21 @@
     {{-- Start the main content --}}
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
         <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
-            
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach ($pharmacies as $pharmacy)
                 <div class="bg-white dark:bg-gray-900 rounded-xl shadow-md p-6 border border-gray-200 dark:border-gray-700">
-                    <h3 class="text-lg font-bold text-gray-800 dark:text-white">Farmacia Tuia</h3>
+                    <h3 class="text-lg font-bold text-gray-800 dark:text-white">{{ $pharmacy->pharmacy_name }}</h3>
                     <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
-                        Localização: Cidade da Beira
+                        Location: {{ $pharmacy->pharmacy_location }}
                     </p>
                     <p class="text-sm text-gray-600 dark:text-gray-300">
-                        Contacto: +867336817
+                        Manager: {{ $pharmacy->user->name }}
+                    </p>
+                    <p class="text-sm text-gray-600 dark:text-gray-300">
+                        Manager Email: {{ $pharmacy->user->email }}
+                    </p>
+                    <p class="text-sm text-gray-600 dark:text-gray-300">
+                        Contact: +258 {{ $pharmacy->pharmacy_contact }}
                     </p>
                     <div class="mt-4 flex items-center space-x-4">
                         <a href=""
@@ -43,6 +49,7 @@
                         </form>
                     </div>
                 </div>
+                @endforeach
             </div>
         </div>
     </div>

@@ -17,15 +17,12 @@ class Pharmacy extends Component
     public $id, $pharmacy, $user_id, $pharmacy_name, $pharmacy_location, $pharmacy_description;
     public $name, $email, $password, $data;
     public $pharmacy_contact, $pharmacy_file, $pharmacy_data;
-    public $showModal = false;
-
-    protected $listeners = ['openModal' => 'openModal'];
 
     public function render()
     {
-        $pharmacies = Pharmacy::all();
-        return view('livewire.pharmacy', compact('pharmacies'))
-            ->layout('layouts.app');
+        return view('livewire.pharmacy', [
+            'pharmacies' => \App\Models\Pharmacy::with('user')->get()
+        ])->layout('layouts.app');
     }
     public function save()
     {
