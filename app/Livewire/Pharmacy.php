@@ -2,14 +2,31 @@
 
 namespace App\Livewire;
 
+use App\Models\User;
 use DB;
 use Hash;
 use Livewire\Component;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Log;
 
 class Pharmacy extends Component
 {
     //?Pharmacy Datas
     public $id, $pharmacy, $user_id, $pharmacy_name, $pharmacy_location, $pharmacy_description;
+    public $name, $email, $password, $data;
+    public $showModal = false;
+
+    protected $listeners = ['openModal' => 'openModal'];
+
+    public function openModal()
+    {
+        $this->showModal = true;
+    }
+
+    public function closeModal()
+    {
+        $this->showModal = false;
+    }
     public function render()
     {
         $pharmacies = Pharmacy::all();
@@ -37,13 +54,28 @@ class Pharmacy extends Component
             ]);
             $user->addRole('pharmacy');
 
-            Pharmacy::create([
+            \App\Models\Pharmacy::create([
                 'pharmacy_name' => $data['pharmacy_name'],
                 'pharmacy_location' => $data['pharmacy_location'],
                 'pharmacy_description' => $data['pharmacy_description'],
                 'user_id' => $user->id,
             ]);
         });
+
+        $this->reset([
+            'name',
+            'email',
+            'password',
+            'pharmacy_name',
+            'pharmacy_location',
+            'pharmacy_description',
+        ]);
+
+        $this->showModal = false;
+
+        $this->dispatch('close-modal');
+
+        toast('Pharmacy added with successfuly', 'success');
     }
     public function destroy($id)
     {
