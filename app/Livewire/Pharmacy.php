@@ -17,12 +17,17 @@ class Pharmacy extends Component
     public $id, $pharmacy, $user_id, $pharmacy_name, $pharmacy_location, $pharmacy_description;
     public $name, $email, $password, $data;
     public $pharmacy_contact, $pharmacy_file, $pharmacy_data;
+    public $selectedPharmacyId;
 
     public function render()
     {
         return view('livewire.pharmacy', [
             'pharmacies' => \App\Models\Pharmacy::with('user')->get()
         ])->layout('layouts.app');
+    }
+    public function confirmDeletion($id)
+    {
+        $this->selectedPharmacyId = $id;
     }
     public function save()
     {
@@ -78,10 +83,19 @@ class Pharmacy extends Component
 
         toast('Pharmacy added with successfuly', 'success');
     }
-    public function destroy($id)
+    public function deletePharmacy()
     {
-        $pharmacy = Pharmacy::findOrFail($id);
+        $pharmacy = \App\Models\Pharmacy::find($this->selectedPharmacyId);
 
-        $pharmacy->delete();
+        if ($pharmacy) {
+            // Opcional: deletar também o usuário associado, se quiser
+            $pharmacy->user()->delete();
+            $pharmacy->delete();
+
+            session()->flash('message', 'Farmácia eliminada com sucesso.');
+        }
+
+        $this->reset('selectedPharmacyId');
+        $this->dispatch('close-modal', 'confirm-user-deletion');
     }
 }

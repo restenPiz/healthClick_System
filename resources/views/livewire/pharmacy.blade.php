@@ -36,23 +36,47 @@
                             class="text-indigo-600 hover:underline dark:text-indigo-400">
                             More Details
                         </a>
-                        <a href=""
-                            class="text-yellow-500 hover:underline dark:text-yellow-400">
-                            Edit
-                        </a>
-                        <form action="" method="POST" onsubmit="return confirm('Tens certeza que desejas eliminar?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-red-600 hover:underline dark:text-red-400">
-                                Delete
-                            </button>
-                        </form>
+                        <x-primary-button
+                            x-data=""
+                            x-on:click.prevent=""
+                        >{{ __('Edit') }}</x-primary-button>
+                        <x-danger-button
+                            wire:click="confirmDeletion({{ $pharmacy->id }})"
+                            x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
+                        >
+                            {{ __('Delete') }}
+                        </x-danger-button>
                     </div>
                 </div>
                 @endforeach
             </div>
         </div>
     </div>
+
+     {{--?Modal to delete pharmacy--}}
+    <x-modal name="confirm-user-deletion" :show="$errors->isNotEmpty()" focusable>
+        <form wire:submit.prevent="deletePharmacy" class="p-6">
+
+            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                {{ __('Tens certeza que queres eliminar esta farmácia?') }}
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                Esta ação é irreversível. Clique em eliminar para continuar.
+            </p>
+
+            <div class="mt-6 flex justify-end">
+                <x-secondary-button x-on:click="$dispatch('close')">
+                    {{ __('Cancelar') }}
+                </x-secondary-button>
+
+                <x-danger-button class="ms-3">
+                    {{ __('Eliminar') }}
+                </x-danger-button>
+            </div>
+        </form>
+    </x-modal>
+    {{--?End of modal--}}
 
     {{--?Modal to add Pharmacy--}}
     <x-modal name="add-pharmacy" :show="$errors->isNotEmpty()" focusable>
