@@ -93,7 +93,7 @@ class Pharmacy extends Component
             session()->flash('message', 'Farmácia eliminada com sucesso.');
         }
 
-        $this->reset('selectedPharmacyId');
+        $this->reset('selectedPharmacyId', 'pharmacy');
         $this->dispatch('close-modal', 'confirm-user-deletion');
         $this->dispatch('pharmacy-deleted');
     }
@@ -124,6 +124,16 @@ class Pharmacy extends Component
 
         $pharmacy = \App\Models\Pharmacy::findOrFail($this->editPharmacy['id']);
         $pharmacy->update($this->editPharmacy);
+
+        $this->reset([
+            'pharmacy',
+            'pharmacy_name',
+            'pharmacy_contact',
+            'pharmacy_location',
+            'pharmacy_description',
+            'pharmacy_contact',
+            'pharmacy_file',
+        ]);
 
         $this->dispatch('close-modal', 'edit-pharmacy-modal');
         $this->dispatch('pharmacy-updated');

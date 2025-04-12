@@ -44,7 +44,7 @@
                         Contact: +258 {{ $pharmacy->pharmacy_contact }}
                     </p>
                     <div class="mt-4 flex items-center space-x-4">
-                        <a href=""
+                        <a wire:navigate href="{{ route('pharmacyDetails', $pharmacy->id) }}"
                             class="text-indigo-600 hover:underline dark:text-indigo-400">
                             More Details
                         </a>
