@@ -38,6 +38,7 @@
         </div>
         @livewireScripts
         @include('sweetalert::alert')
+        @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
         {{--?Google Map Link--}}
         <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU6gQ1_MjMZOE35nYQ6-ovXw4er01wiuQ&callback=initMap"></script>
     </body>

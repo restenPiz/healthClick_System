@@ -7,7 +7,6 @@ use DB;
 use Hash;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Log;
 
 class Pharmacy extends Component
@@ -81,14 +80,13 @@ class Pharmacy extends Component
 
         $this->dispatch('close-modal', 'add-pharmacy');
 
-        toast('Pharmacy added with successfuly', 'success');
+        $this->dispatch('pharmacy-added');
     }
     public function deletePharmacy()
     {
         $pharmacy = \App\Models\Pharmacy::find($this->selectedPharmacyId);
 
         if ($pharmacy) {
-            // Opcional: deletar também o usuário associado, se quiser
             $pharmacy->user()->delete();
             $pharmacy->delete();
 
@@ -97,6 +95,7 @@ class Pharmacy extends Component
 
         $this->reset('selectedPharmacyId');
         $this->dispatch('close-modal', 'confirm-user-deletion');
+        $this->dispatch('pharmacy-deleted');
     }
     public $editPharmacy = [
         'id' => null,
@@ -127,7 +126,7 @@ class Pharmacy extends Component
         $pharmacy->update($this->editPharmacy);
 
         $this->dispatch('close-modal', 'edit-pharmacy-modal');
-        toast('Pharmacy updated successfully!', 'success');
+        $this->dispatch('pharmacy-updated');
     }
 
 }

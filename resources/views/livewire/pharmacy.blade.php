@@ -15,6 +15,18 @@
     {{-- Start the main content --}}
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
         <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
+            {{--?Alert--}}
+            <x-action-message class="me-3 bg-green-700 rounded text-white dark:text-white" on="pharmacy-added">
+                {{ __('Pharmacy added with successfuly') }}
+            </x-action-message>
+            <x-action-message class="me-3 bg-green-700 rounded text-white dark:text-white" on="pharmacy-updated">
+                {{ __('Pharmacy updated with successfuly') }}
+            </x-action-message>
+            <x-action-message class="me-3 bg-green-700 rounded text-white dark:text-white" on="pharmacy-deleted">
+                {{ __('Pharmacy deleted with successfuly') }}
+            </x-action-message>
+            {{--?End Alert--}}
+            <div style="margin-top:0.5rem"></div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach ($pharmacies as $pharmacy)
                 <div class="bg-white dark:bg-gray-900 rounded-xl shadow-md p-6 border border-gray-200 dark:border-gray-700">
@@ -62,20 +74,20 @@
         <form wire:submit.prevent="deletePharmacy" class="p-6">
 
             <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                {{ __('Tens certeza que queres eliminar esta farmácia?') }}
+                {{ __('Are you sure you want to eliminate this pharmacy?') }}
             </h2>
 
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                Esta ação é irreversível. Clique em eliminar para continuar.
+               This action is irreversible. Click delete to continue.
             </p>
 
             <div class="mt-6 flex justify-end">
                 <x-secondary-button x-on:click="$dispatch('close')">
-                    {{ __('Cancelar') }}
+                    {{ __('Cancel') }}
                 </x-secondary-button>
 
                 <x-danger-button class="ms-3">
-                    {{ __('Eliminar') }}
+                    {{ __('Delete') }}
                 </x-danger-button>
             </div>
         </form>
@@ -100,8 +112,6 @@
                 <x-text-input id="pharmacy_contact" wire:model.defer="editPharmacy.pharmacy_contact" class="mt-1 block w-full" />
                 <x-input-error :messages="$errors->get('pharmacy_contact')" class="mt-2" />
             </div>
-
-            {{-- Pode adicionar outros campos como descrição ou file se quiser --}}
 
             <div class="mt-6 flex justify-end">
                 <x-secondary-button x-on:click="$dispatch('close')">
