@@ -98,4 +98,36 @@ class Pharmacy extends Component
         $this->reset('selectedPharmacyId');
         $this->dispatch('close-modal', 'confirm-user-deletion');
     }
+    public $editPharmacy = [
+        'id' => null,
+        'pharmacy_name' => '',
+        // 'pharmacy_location' => '',
+        'pharmacy_contact' => '',
+    ];
+    public function setPharmacyToEdit($id)
+    {
+        $pharmacy = \App\Models\Pharmacy::findOrFail($id);
+        $this->editPharmacy = [
+            'id' => $pharmacy->id,
+            'pharmacy_name' => $pharmacy->pharmacy_name,
+            // 'pharmacy_location' => $pharmacy->pharmacy_location,
+            'pharmacy_contact' => $pharmacy->pharmacy_contact,
+        ];
+    }
+
+    public function updatePharmacy()
+    {
+        $this->validate([
+            'editPharmacy.pharmacy_name' => 'required|string|max:255',
+            // 'editPharmacy.pharmacy_location' => 'required|string|max:255',
+            'editPharmacy.pharmacy_contact' => 'required|string|max:255',
+        ]);
+
+        $pharmacy = \App\Models\Pharmacy::findOrFail($this->editPharmacy['id']);
+        $pharmacy->update($this->editPharmacy);
+
+        $this->dispatch('close-modal', 'edit-pharmacy-modal');
+        toast('Pharmacy updated successfully!', 'success');
+    }
+
 }

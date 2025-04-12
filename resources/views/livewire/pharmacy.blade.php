@@ -36,10 +36,14 @@
                             class="text-indigo-600 hover:underline dark:text-indigo-400">
                             More Details
                         </a>
+                        {{--*Edit Button--}}
                         <x-primary-button
                             x-data=""
-                            x-on:click.prevent=""
-                        >{{ __('Edit') }}</x-primary-button>
+                            x-on:click.prevent="$wire.setPharmacyToEdit({{ $pharmacy->id }}); $dispatch('open-modal', 'edit-pharmacy-modal')"
+                        >
+                            {{ __('Edit') }}
+                        </x-primary-button>
+                        {{--*Delete Button--}}
                         <x-danger-button
                             wire:click="confirmDeletion({{ $pharmacy->id }})"
                             x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
@@ -77,6 +81,40 @@
         </form>
     </x-modal>
     {{--?End of modal--}}
+
+    {{--?Start Modal Edit--}}
+    <x-modal name="edit-pharmacy-modal" :show="false" focusable>
+        <form wire:submit.prevent="updatePharmacy" class="p-6">
+            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                {{ __('Edit Pharmacy') }}
+            </h2>
+
+            <div class="mt-4">
+                <x-input-label for="pharmacy_name" value="Pharmacy Name" />
+                <x-text-input id="pharmacy_name" wire:model.defer="editPharmacy.pharmacy_name" class="mt-1 block w-full" />
+                <x-input-error :messages="$errors->get('pharmacy_name')" class="mt-2" />
+            </div>
+
+            <div class="mt-4">
+                <x-input-label for="pharmacy_contact" value="Contact" />
+                <x-text-input id="pharmacy_contact" wire:model.defer="editPharmacy.pharmacy_contact" class="mt-1 block w-full" />
+                <x-input-error :messages="$errors->get('pharmacy_contact')" class="mt-2" />
+            </div>
+
+            {{-- Pode adicionar outros campos como descrição ou file se quiser --}}
+
+            <div class="mt-6 flex justify-end">
+                <x-secondary-button x-on:click="$dispatch('close')">
+                    {{ __('Cancel') }}
+                </x-secondary-button>
+
+                <x-primary-button class="ms-3">
+                    {{ __('Update') }}
+                </x-primary-button>
+            </div>
+        </form>
+    </x-modal>
+    {{--?End of Modal Edit--}}
 
     {{--?Modal to add Pharmacy--}}
     <x-modal name="add-pharmacy" :show="$errors->isNotEmpty()" focusable>
