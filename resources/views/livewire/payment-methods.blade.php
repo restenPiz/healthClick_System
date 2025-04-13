@@ -20,7 +20,7 @@
                         <label for="methodName" class="block text-gray-700 dark:text-gray-300 font-medium mb-2">
                             Nome do Método
                         </label>
-                        <input wire:model="methodName" id="methodName" type="text" placeholder="Ex: Cartão, M-Pesa"
+                        <input wire:model="method_mame" id="methodName" type="text" placeholder="Ex: Cartão, M-Pesa"
                             class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-indigo-500">
                     </div>
                     <x-primary-button>
@@ -31,6 +31,18 @@
 
             <!-- Tabela de Métodos -->
             <div class="lg:w-1/2 bg-white dark:bg-gray-800 p-6 shadow rounded-lg">
+                 {{--?Alert--}}
+                <x-action-message class="me-3 bg-green-700 rounded text-white dark:text-white" on="pharmacy-added">
+                    {{ __('payment added with successfuly') }}
+                </x-action-message>
+                <x-action-message class="me-3 bg-green-700 rounded text-white dark:text-white" on="payment-updated">
+                    {{ __('payment updated with successfuly') }}
+                </x-action-message>
+                <x-action-message class="me-3 bg-green-700 rounded text-white dark:text-white" on="payment-deleted">
+                    {{ __('payment deleted with successfuly') }}
+                </x-action-message>
+                <div style="margin-top:0.5rem"></div>
+                {{--?End Alert--}}
                 <h2 class="text-gray-100 text-xl font-semibold mb-4">Payment Methods</h2>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
