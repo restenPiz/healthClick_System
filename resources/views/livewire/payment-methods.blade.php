@@ -20,8 +20,14 @@
                         <label for="methodName" class="block text-gray-700 dark:text-gray-300 font-medium mb-2">
                             Nome do Método
                         </label>
-                        <input wire:model="method_mame" id="methodName" type="text" placeholder="Ex: Cartão, M-Pesa"
-                            class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-indigo-500">
+                        <x-text-input
+                        wire:model.defer="method_name"
+                        id="method_name"
+                        name="method_name"
+                        type="text"
+                        class="mt-1 block w-full"
+                        placeholder="{{ __('Method Name') }}"
+                        autofocus />
                     </div>
                     <x-primary-button>
                         Add
@@ -32,7 +38,7 @@
             <!-- Tabela de Métodos -->
             <div class="lg:w-1/2 bg-white dark:bg-gray-800 p-6 shadow rounded-lg">
                  {{--?Alert--}}
-                <x-action-message class="me-3 bg-green-700 rounded text-white dark:text-white" on="pharmacy-added">
+                <x-action-message class="me-3 bg-green-700 rounded text-white dark:text-white" on="payment-added">
                     {{ __('payment added with successfuly') }}
                 </x-action-message>
                 <x-action-message class="me-3 bg-green-700 rounded text-white dark:text-white" on="payment-updated">
@@ -59,30 +65,82 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                            @foreach ($payments as $payment)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                        Mpesa
+                                        {{$payment->method_name}}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                                        <button wire:click=""
+                                        <button  x-data=""
+                                            x-on:click.prevent="$wire.setPaymentToEdit({{ $payment->id }}); $dispatch('open-modal', 'edit-pharmacy-modal')"
                                             class="text-yellow-500 hover:text-yellow-600">
                                             Editar
                                         </button>
-                                        <button wire:click=""
+                                        <button
                                             class="ml-2 text-red-500 hover:text-red-600"
-                                            onclick="confirm('Tem certeza que deseja excluir este método?') || event.stopImmediatePropagation()">
+                                            wire:click="confirmDeletion({{ $payment->id }})"
+                                            x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')">
                                             Eliminar
                                         </button>
                                     </td>
                                 </tr>
-                            
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
+    {{--?Modal to delete payment--}}
+    <x-modal name="confirm-user-deletion" :show="$errors->isNotEmpty()" focusable>
+        <form wire:submit.prevent="deletePayment" class="p-6">
+
+            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                {{ __('Are you sure you want to eliminate this payment?') }}
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+               This action is irreversible. Click delete to continue.
+            </p>
+
+            <div class="mt-6 flex justify-end">
+                <x-secondary-button x-on:click="$dispatch('close')">
+                    {{ __('Cancel') }}
+                </x-secondary-button>
+
+                <x-danger-button class="ms-3">
+                    {{ __('Delete') }}
+                </x-danger-button>
+            </div>
+        </form>
+    </x-modal>
+    {{--?End of modal--}}
+
+    {{--?Start with the editModal--}}
+    <x-modal name="edit-pharmacy-modal" :show="false" focusable>
+        <form wire:submit.prevent="updatePayment" class="p-6">
+            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                {{ __('Edit Payment Methods') }}
+            </h2>
+
+            <div class="mt-4">
+                <x-input-label for="method_name" value="Payment Method Name" />
+                <x-text-input id="method_name" wire:model.defer="editPayment.method_name" class="mt-1 block w-full" />
+                <x-input-error :messages="$errors->get('method_name')" class="mt-2" />
+            </div>
+
+            <div class="mt-6 flex justify-end">
+                <x-secondary-button x-on:click="$dispatch('close')">
+                    {{ __('Cancel') }}
+                </x-secondary-button>
+
+                <x-primary-button class="ms-3">
+                    {{ __('Update') }}
+                </x-primary-button>
+            </div>
+        </form>
+    </x-modal>
+    {{--?End of the editModal--}}
 
     {{-- ?End of the main content --}}
-
 </div>
