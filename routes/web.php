@@ -1,8 +1,10 @@
 <?php
 
+use App\Livewire\Categories;
 use App\Livewire\Dashboard;
 use App\Livewire\PaymentMethods;
 use App\Livewire\Pharmacy;
+use App\Livewire\PharmacyDashboard;
 use App\Livewire\PharmacyDetails;
 use App\Livewire\Product;
 use App\Livewire\User;
@@ -13,7 +15,20 @@ use Livewire\Volt\Volt;
 Volt::route('/', 'pages.auth.login')
     ->name('login');
 
-Route::get('dashboard', Dashboard::class)->name('dashboard');
+Route::get('dashboard', function () {
+    if (Auth::check()) {
+        if (Auth::user()->hasRole('admin')) {
+            return redirect()->route('dash');
+        } elseif (Auth::user()->hasRole('pharmacy')) {
+            return redirect()->route('pharmacyDashboard');
+        }
+    }
+
+    return redirect()->route('login');
+})->name('dashboard');
+
+Route::get('/dash', Dashboard::class)->name('dash');
+Route::get('pharmacyDashboard', PharmacyDashboard::class)->name('pharmacyDashboard');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
@@ -22,6 +37,9 @@ Route::view('profile', 'profile')
 //*Pharmacy routes
 Route::get('/pharmacy', Pharmacy::class)->name('pharmacy');
 Route::get('/pharmacyDetails/{id}', PharmacyDetails::class)->name('pharmacyDetails');
+
+//*Category route
+Route::get('/category', Categories::class)->name('category');
 
 Route::get('/product', Product::class)->name('product');
 Route::get('/user', User::class)->name('user');

@@ -27,6 +27,7 @@ new class extends Component
 
                 {{--?Navigation section--}}
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    @role('admin')
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </x-nav-link>
@@ -36,12 +37,33 @@ new class extends Component
                     <x-nav-link :href="route('product')" :active="request()->routeIs('product')" wire:navigate>
                         {{ __('Product') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('category')" :active="request()->routeIs('category')" wire:navigate>
+                        {{ __('Categories') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('user')" :active="request()->routeIs('user')" wire:navigate>
                         {{ __('Users') }}
                     </x-nav-link>
                     <x-nav-link :href="route('payment_methods')" :active="request()->routeIs('payment_methods')" wire:navigate>
                         {{ __('Payment Methods') }}
                     </x-nav-link>
+                    @endrole
+                    @role('pharmacy')
+                    <x-nav-link :href="route('pharmacyDashboard')" :active="request()->routeIs('pharmacyDashboard')" wire:navigate>
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('pharmacy')" :active="request()->routeIs('pharmacy','pharmacyDetails')" wire:navigate>
+                        {{ __('Product') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('pharmacy')" :active="request()->routeIs('pharmacy','pharmacyDetails')" wire:navigate>
+                        {{ __('Payment') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('pharmacy')" :active="request()->routeIs('pharmacy','pharmacyDetails')" wire:navigate>
+                        {{ __('Orders') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('pharmacy')" :active="request()->routeIs('pharmacy','pharmacyDetails')" wire:navigate>
+                        {{ __('Sales') }}
+                    </x-nav-link>
+                    @endrole
                 </div>
             </div>
 

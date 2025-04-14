@@ -15,9 +15,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
     </head>
-    <body x-data="{ darkMode: false }" 
-      x-init="darkMode = localStorage.getItem('darkMode') === 'true'" 
-      x-bind:class="{ 'dark': darkMode }" 
+    <body  
       class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             <livewire:layout.navigation />
