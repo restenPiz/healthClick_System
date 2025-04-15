@@ -123,6 +123,17 @@
                     <input type="text" id="table-search-users" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for users">
                 </div>
             </div>
+
+            {{--?Alerts--}}
+            <x-action-message class="me-3 bg-green-700 rounded text-white dark:text-white" on="product-updated">
+                {{ __('Product updated with successfuly') }}
+            </x-action-message>
+            <x-action-message class="me-3 bg-green-700 rounded text-white dark:text-white" on="product-deleted">
+                {{ __('Product deleted with successfuly') }}
+            </x-action-message>
+            {{--?End Alert--}}
+            <div style="margin-top:0.5rem"></div>
+
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -198,8 +209,14 @@
                                 {{$product->quantity}}
                             </td>
                             <td class="flex items-center px-6 py-4">
-                                <a href="#" class="font-medium text-yellow-600 dark:text-yellow-500 hover:underline ms-3">Edit</a>
-                                <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Delete</a>
+                                <a href="#"
+                                    wire:click="setProductToEdit({{ $product->id }})"
+                                    x-on:click.prevent="$dispatch('open-modal', 'edit-pharmacy-modal')"
+                                    {{--x-on:click.prevent="$wire.setProductToEdit({{ $product->id }}); $dispatch('open-modal', 'edit-pharmacy-modal')"--}}
+                                    class="font-medium text-yellow-600 dark:text-yellow-500 hover:underline ms-3">Edit</a>
+                                <a href="#" wire:click="confirmDeletion({{ $product->id }})"
+                                    x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
+                                    class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -232,6 +249,91 @@
                 </ul>
             </nav>
         </div>
+         <x-modal name="confirm-user-deletion" :show="$errors->isNotEmpty()" focusable>
+            <form wire:submit.prevent="deleteProduct" class="p-6">
+
+                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                    {{ __('Are you sure you want to eliminate this product?') }}
+                </h2>
+
+                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                This action is irreversible. Click delete to continue.
+                </p>
+
+                <div class="mt-6 flex justify-end">
+                    <x-secondary-button x-on:click="$dispatch('close')">
+                        {{ __('Cancel') }}
+                    </x-secondary-button>
+
+                    <x-danger-button class="ms-3">
+                        {{ __('Delete') }}
+                    </x-danger-button>
+                </div>
+            </form>
+        </x-modal>
+        {{--?End of modal--}}
+
+        {{--?Start Modal Edit--}}
+        <x-modal name="edit-pharmacy-modal" :show="false" focusable>
+            <form wire:submit.prevent="updateProduct" class="p-6">
+                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                    {{ __('Edit Product') }}
+                </h2>
+                <div class="mt-4">
+                    <x-input-label for="product_name" value="Product Name" />
+                    <x-text-input id="product_name" wire:model.defer="editProduct.product_name" class="mt-1 block w-full" />
+                    <x-input-error :messages="$errors->get('product_name')" class="mt-2" />
+                </div>
+                <div class="mt-4">
+                    <x-input-label for="product_price" value="Product Name" />
+                    <x-text-input id="product_price" wire:model.defer="editProduct.product_price" class="mt-1 block w-full" />
+                    <x-input-error :messages="$errors->get('product_price')" class="mt-2" />
+                </div>
+                <div class="mt-4">
+                    <x-input-label for="quantity" value="Product Name" />
+                    <x-text-input id="quantity" wire:model.defer="editProduct.quantity" class="mt-1 block w-full" />
+                    <x-input-error :messages="$errors->get('quantity')" class="mt-2" />
+                </div>
+                <div class="mt-4">
+                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                    <select id="countries" wire:model="editProduct.category_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        {{-- <option value="{{$product->category_id}}">{{$product->category->category_name}}</option> --}}
+                        @foreach ($categories as $category)
+                            <option value="{{$category->id}}">{{$category->category_name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mt-4">
+                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Image</label>
+                    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-60 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                            </svg>
+                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                        </div>
+                        <input wire:model="product_file" id="dropzone-file" type="file" class="hidden" />
+                    </label>
+                </div>
+                <div class="mt-4">
+                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Description</label>
+                    <textarea wire:model="editProduct.product_description" id="message" rows="11" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{$product->product_description}}</textarea>
+                </div>
+                <input type="hidden" value="{{Auth::user()->pharmacy->id}}" wire:model="editProduct.pharmacy_id">
+                <div class="mt-6 flex justify-end">
+                    <x-secondary-button x-on:click="$dispatch('close')">
+                        {{ __('Cancel') }}
+                    </x-secondary-button>
+
+                    <x-primary-button class="ms-3">
+                        {{ __('Update') }}
+                    </x-primary-button>
+                </div>
+            </form>
+        </x-modal>
+        {{--?End modal--}}
+
         {{--?End of the main content--}}
         </div><br><br>
     </div>
