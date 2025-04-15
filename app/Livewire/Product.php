@@ -69,6 +69,7 @@ class Product extends Component
             'editProduct.quantity' => 'required|integer|min:0',
             'editProduct.category_id' => 'required|exists:categories,id',
             'editProduct.pharmacy_id' => 'required|exists:pharmacies,id',
+            'product_file' => 'required',
         ]);
 
         $product = \App\Models\Product::findOrFail($this->editProduct['id']);

@@ -282,17 +282,17 @@
                 <div class="mt-4">
                     <x-input-label for="product_name" value="Product Name" />
                     <x-text-input id="product_name" wire:model.defer="editProduct.product_name" class="mt-1 block w-full" />
-                    <x-input-error :messages="$errors->get('product_name')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('editProduct.product_name')" class="mt-2" />
                 </div>
                 <div class="mt-4">
                     <x-input-label for="product_price" value="Product Name" />
                     <x-text-input id="product_price" wire:model.defer="editProduct.product_price" class="mt-1 block w-full" />
-                    <x-input-error :messages="$errors->get('product_price')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('editProduct.product_price')" class="mt-2" />
                 </div>
                 <div class="mt-4">
                     <x-input-label for="quantity" value="Product Name" />
                     <x-text-input id="quantity" wire:model.defer="editProduct.quantity" class="mt-1 block w-full" />
-                    <x-input-error :messages="$errors->get('quantity')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('editProduct.quantity')" class="mt-2" />
                 </div>
                 <div class="mt-4">
                     <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
@@ -302,6 +302,7 @@
                             <option value="{{$category->id}}">{{$category->category_name}}</option>
                         @endforeach
                     </select>
+                    <x-input-error :messages="$errors->get('editProduct.category_id')" class="mt-2" />
                 </div>
                 <div class="mt-4">
                     <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Image</label>
@@ -314,11 +315,13 @@
                             <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                         </div>
                         <input wire:model="product_file" id="dropzone-file" type="file" class="hidden" />
+                        <x-input-error :messages="$errors->get('product_file')" class="mt-2" />
                     </label>
                 </div>
                 <div class="mt-4">
                     <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Description</label>
                     <textarea wire:model="editProduct.product_description" id="message" rows="11" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{$product->product_description}}</textarea>
+                    <x-input-error :messages="$errors->get('editProduct.product_description')" class="mt-2" />
                 </div>
                 <input type="hidden" value="{{Auth::user()->pharmacy->id}}" wire:model="editProduct.pharmacy_id">
                 <div class="mt-6 flex justify-end">
