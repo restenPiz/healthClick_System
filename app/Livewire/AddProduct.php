@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Events\ProductUpdated;
 use App\Models\Category;
 use App\Models\Product;
 use Livewire\Component;
@@ -12,6 +13,7 @@ class AddProduct extends Component
     use WithFileUploads;
     public $product_name, $product_file, $product_price,
     $product_description, $quantity, $category_id, $pharmacy_id;
+    public $product;
     public function mount()
     {
         $this->pharmacy_id = auth()->user()->pharmacy->id ?? null;
@@ -36,7 +38,7 @@ class AddProduct extends Component
             'product_file' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
-        Product::create([
+        $product = Product::create([
             'product_name' => $this->product_name,
             'product_price' => $this->product_price,
             'product_description' => $this->product_description,
@@ -45,6 +47,8 @@ class AddProduct extends Component
             'pharmacy_id' => $this->pharmacy_id,
             'product_file' => $this->product_file->store('product_files', 'public'),
         ]);
+
+        event(new ProductUpdated($product));
 
         $this->reset([
             'product_name',

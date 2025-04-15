@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use App\Events\ProductUpdated;
 
 class Product extends Component
 {
@@ -26,6 +27,8 @@ class Product extends Component
     {
         $product = \App\Models\Product::find($this->selectedProductId);
         $product->delete();
+
+        event(new ProductUpdated($product));
 
         $this->reset('id');
         $this->dispatch('close-modal', 'confirm-user-deletion');
@@ -91,6 +94,8 @@ class Product extends Component
             'product_description' => $this->editProduct['product_description'],
             'product_file' => $this->editProduct['product_file'],
         ]);
+
+        event(new ProductUpdated($product));
 
         $this->reset('editProduct', 'product_file');
         $this->dispatch('close-modal', 'edit-pharmacy-modal');
