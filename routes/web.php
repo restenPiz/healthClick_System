@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\AddProduct;
 use App\Livewire\Categories;
 use App\Livewire\Dashboard;
 use App\Livewire\PaymentMethods;
@@ -41,6 +42,7 @@ Route::get('/pharmacyDetails/{id}', PharmacyDetails::class)->name('pharmacyDetai
 //*Category route
 Route::get('/category', Categories::class)->name('category');
 
+Route::get('/addProduct', AddProduct::class)->name('addProduct');
 Route::get('/product', Product::class)->name('product');
 Route::get('/user', User::class)->name('user');
 Route::get('/payment_methods', PaymentMethods::class)->name('payment_methods');
