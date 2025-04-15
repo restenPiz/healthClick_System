@@ -6,9 +6,14 @@ use Livewire\Component;
 
 class Product extends Component
 {
+    public function mount()
+    {
+        $this->pharmacy_id = auth()->user()->pharmacy->id ?? null;
+    }
     public function render()
     {
-        return view('livewire.product')
+        $products = \App\Models\Product::where('pharmacy_id', $this->pharmacy_id)->get();
+        return view('livewire.product', compact('products'))
             ->layout('layouts.app');
     }
 }

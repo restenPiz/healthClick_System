@@ -5,6 +5,7 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('New Product') }}
             </h2>
+            
             <a href="{{route('product')}}" wire:navigate class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-indigo-700 transition"
                 >
                 {{ __('← Back') }}
@@ -15,7 +16,19 @@
     {{-- ?Start the main content --}}
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
         <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
-            <form>
+            {{--?Alert--}}
+            <x-action-message class="me-3 bg-green-700 rounded text-white dark:text-white" on="product-added">
+                {{ __('Product added with successfuly') }}
+            </x-action-message>
+            <x-action-message class="me-3 bg-green-700 rounded text-white dark:text-white" on="product-updated">
+                {{ __('Product updated with successfuly') }}
+            </x-action-message>
+            <x-action-message class="me-3 bg-green-700 rounded text-white dark:text-white" on="product-deleted">
+                {{ __('Product deleted with successfuly') }}
+            </x-action-message>
+            {{--?End Alert--}}
+            <div style="margin-top:0.5rem"></div>
+            <form wire:submit="save">
                 <div class="grid gap-6 mb-6 md:grid-cols-2">
                     <div>
                         <label for="product_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Name</label>
@@ -27,7 +40,7 @@
                     </div>
                     <div>
                         <label for="website" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quantity</label>
-                        <input type="url" id="website" wire:model="quantity" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="10" required />
+                        <input type="number" id="website" wire:model="quantity" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="10" required />
                     </div>
                     <div>
                         <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
@@ -48,13 +61,14 @@
                                 <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
                                 <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                             </div>
-                            <input id="dropzone-file" type="file" class="hidden" />
+                            <input wire:model="product_file" id="dropzone-file" type="file" class="hidden" />
                         </label>
                     </div>
                     <div>    
                         <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Description</label>
-                        <textarea id="message" rows="11" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Leave a comment..."></textarea>
+                        <textarea wire:model="product_description" id="message" rows="11" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Leave a comment..."></textarea>
                     </div>
+                    <input type="hidden" value="{{Auth::user()->pharmacy->id}}" wire:model="pharmacy_id">
                 </div>
                 <button type="submit" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Submit</button>
             </form>

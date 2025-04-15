@@ -18,6 +18,7 @@ class Product extends Model
         'quantity',
         'category_id',
         'pharmacy_id',
+        'product_file',
     ];
 
     public function category()
