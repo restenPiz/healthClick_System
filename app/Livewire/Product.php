@@ -97,7 +97,7 @@ class Product extends Component
 
         event(new ProductUpdated($product));
 
-        $this->reset('editProduct', 'product_file');
+        $this->reset('editProduct', 'product_file', 'product_description');
         $this->dispatch('close-modal', 'edit-pharmacy-modal');
         $this->dispatch('product-updated');
     }

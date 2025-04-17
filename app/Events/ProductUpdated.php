@@ -28,6 +28,13 @@ class ProductUpdated
     }
     public function broadcastWith()
     {
-        return ['product' => $this->product];
+        // return ['product' => $this->product];
+        return [
+            'id' => $this->product->id,
+            'name' => $this->product->product_name,
+            'price' => $this->product->product_price,
+            'image' => $this->product->product_file,
+            // etc.
+        ];
     }
 }
