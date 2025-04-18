@@ -8,14 +8,6 @@ use Storage;
 
 class ProductController extends Controller
 {
-    // public function index()
-    // {
-    //     return response()->json([
-    //         'status' => true,
-    //         // 'products' => Product::with('category')->get()
-    //         // 'products' => Product::all()
-    //     ]);
-    // }
     public function index()
     {
         $products = Product::with('category')->get()->map(function ($product) {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
@@ -11,3 +12,4 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/pharmacies', [PharmacyController::class, 'index']);
+Route::get('/categories', [ApiController::class, 'category']);
