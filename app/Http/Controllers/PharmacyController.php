@@ -9,7 +9,7 @@ class PharmacyController extends Controller
 {
     public function index()
     {
-        $pharmacies = Pharmacy::all();
+        $pharmacies = Pharmacy::with('user')->get();
 
         return response()->json([
             'status' => true,
