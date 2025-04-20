@@ -13,3 +13,5 @@ Route::get('/user', function (Request $request) {
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/pharmacies', [PharmacyController::class, 'index']);
 Route::get('/categories', [ApiController::class, 'category']);
+//*Payment Route
+Route::get('/payment', [ApiController::class, 'payment']);

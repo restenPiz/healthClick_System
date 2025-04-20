@@ -16,4 +16,8 @@ class ApiController extends Controller
             'categories' => $categories
         ]);
     }
+    public function payment()
+    {
+
+    }
 }
