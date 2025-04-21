@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Product;
+// use App\Models\Product;
 use App\Models\Sale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Paymentsds\MPesa\Client;
 use Illuminate\Support\Str;
-use ReflectionClass;
+// use ReflectionClass;
 
 class ApiController extends Controller
 {
@@ -187,5 +187,23 @@ class ApiController extends Controller
                 'message' => 'Erro interno no servidor: ' . $e->getMessage()
             ], 500);
         }
+    }
+    public function syncFirebaseUid(Request $request)
+    {
+        $request->validate([
+            'firebase_uid' => 'required|string',
+            'email' => 'required|email',
+        ]);
+
+        $user = \App\Models\User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        $user->firebase_uid = $request->firebase_uid;
+        $user->save();
+
+        return response()->json(['message' => 'UID sincronizado com sucesso']);
     }
 }

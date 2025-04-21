@@ -19,6 +19,9 @@ Route::post('/payment', [ApiController::class, 'payment']);
 //*Sales Route
 Route::get('/sales/{id}', [ApiController::class, 'sale']);
 
+//*Auth
+Route::post('/sync-firebase-uid', [ApiController::class, 'syncFirebaseUid']);
+
 Route::get('/user-by-firebase/{uid}', function ($uid) {
     $user = User::where('firebase_uid', $uid)->first();
 
