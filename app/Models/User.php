@@ -18,6 +18,7 @@ class User extends Authenticatable implements LaratrustUser
         'name',
         'email',
         'password',
+        'firebase_uid',
     ];
 
     protected $hidden = [

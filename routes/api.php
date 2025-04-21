@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\ProductController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,13 @@ Route::get('/categories', [ApiController::class, 'category']);
 Route::post('/payment', [ApiController::class, 'payment']);
 //*Sales Route
 Route::get('/sales/{id}', [ApiController::class, 'sale']);
+
+Route::get('/user-by-firebase/{uid}', function ($uid) {
+    $user = User::where('firebase_uid', $uid)->first();
+
+    if ($user) {
+        return response()->json(['user_id' => $user->id]);
+    }
+
+    return response()->json(['message' => 'User not found'], 404);
+});
