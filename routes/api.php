@@ -15,3 +15,5 @@ Route::get('/pharmacies', [PharmacyController::class, 'index']);
 Route::get('/categories', [ApiController::class, 'category']);
 //*Payment Route
 Route::post('/payment', [ApiController::class, 'payment']);
+//*Sales Route
+Route::get('/sales/{id}', [ApiController::class, 'sale']);

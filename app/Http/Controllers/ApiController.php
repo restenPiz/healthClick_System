@@ -22,6 +22,18 @@ class ApiController extends Controller
             'categories' => $categories
         ]);
     }
+    public function sale($id)
+    {
+        $sales = Sale::with('product')
+            ->where('user_id', $id)
+            ->orderBy('sold_at', 'desc')
+            ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $sales
+        ]);
+    }
     public function payment(Request $request)
     {
         try {
@@ -48,7 +60,6 @@ class ApiController extends Controller
             $result = $client->receive($paymentData);
             Log::info('Resposta do M-Pesa:', (array) $result);
 
-            // Acessar propriedades privadas do objeto usando Reflection
             $reflection = new ReflectionClass($result);
             $successProperty = $reflection->getProperty('success');
             $successProperty->setAccessible(true);
