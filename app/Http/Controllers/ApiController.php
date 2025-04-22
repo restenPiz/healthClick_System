@@ -27,6 +27,10 @@ class ApiController extends Controller
         $products = \App\Models\Product::with('category')
             ->where('category_id', $id)
             ->get();
+
+        return response()->json([
+            'products' => $products,
+        ]);
     }
 
     public function sale($id)
