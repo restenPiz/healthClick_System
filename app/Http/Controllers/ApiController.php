@@ -22,6 +22,13 @@ class ApiController extends Controller
             'categories' => $categories
         ]);
     }
+    public function ProductCategory($id)
+    {
+        $products = \App\Models\Product::with('category')
+            ->where('category_id', $id)
+            ->get();
+    }
+
     public function sale($id)
     {
         $sales = Sale::with('product')
@@ -121,14 +128,24 @@ class ApiController extends Controller
         $request->validate([
             'firebase_uid' => 'required|string',
             'email' => 'required|email',
+            'name' => 'required|string',
         ]);
 
         $user = \App\Models\User::where('email', $request->email)->first();
 
         if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
+            // Criar um novo usuário
+            $user = \App\Models\User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'firebase_uid' => $request->firebase_uid,
+                'password' => bcrypt('default_password'), // Coloca uma senha padrão, pode ser random também
+            ]);
+
+            return response()->json(['message' => 'Usuário criado e UID sincronizado com sucesso']);
         }
 
+        // Se já existir, apenas sincroniza o UID
         $user->firebase_uid = $request->firebase_uid;
         $user->save();
 
