@@ -12,8 +12,11 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/products', [ProductController::class, 'index']);
-Route::get('/pharmacies', [PharmacyController::class, 'index']);
+//*Fetch products using a category_id
+Route::get('/products/category/{id}', [ApiController::class, 'ProductCategory']);
 Route::get('/categories', [ApiController::class, 'category']);
+//*Pharmacy Route
+Route::get('/pharmacies', [PharmacyController::class, 'index']);
 //*Payment Route
 Route::post('/payment', [ApiController::class, 'payment']);
 //*Sales Route
