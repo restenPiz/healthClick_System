@@ -12,6 +12,10 @@ class Sale extends Model
     protected $table = 'sales';
     protected $fillable = ['user_id', 'product_id', 'quantity', 'price', 'sold_at'];
 
+    public function delivery()
+    {
+        return $this->hasMany(Delivery::class);
+    }
     public function user()
     {
         return $this->belongsTo(User::class);

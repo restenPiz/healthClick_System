@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 // use App\Models\Product;
+use App\Models\Delivery;
 use App\Models\Sale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -31,6 +32,26 @@ class ApiController extends Controller
         return response()->json([
             'products' => $products,
         ]);
+    }
+    public function delivery(Request $request)
+    {
+        $validated = $request->validate([
+            'sale_id' => 'required|exists:sales,id',
+            'delivery_address' => 'required|string',
+            'contact' => 'required|string',
+        ]);
+
+        $delivery = Delivery::create([
+            'sale_id' => $validated['sale_id'],
+            'delivery_address' => $validated['delivery_address'],
+            'contact' => $validated['contact'],
+            'status' => 'pendente',
+        ]);
+
+        return response()->json([
+            'message' => 'Entrega registrada com sucesso!',
+            'data' => $delivery,
+        ], 201);
     }
 
     public function sale($id)

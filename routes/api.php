@@ -21,6 +21,8 @@ Route::get('/pharmacies', [PharmacyController::class, 'index']);
 Route::post('/payment', [ApiController::class, 'payment']);
 //*Sales Route
 Route::get('/sales/{id}', [ApiController::class, 'sale']);
+//*Delivery Route
+Route::post('/deliveries', [ApiController::class, 'delivery']);
 
 //*Auth
 Route::post('/sync-firebase-uid', [ApiController::class, 'syncFirebaseUid']);
