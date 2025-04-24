@@ -58,9 +58,9 @@ new class extends Component
                         {{ __('Payment') }}
                     </x-nav-link>
                     <x-nav-link :href="route('pharmacy')" :active="request()->routeIs('pharmacy','pharmacyDetails')" wire:navigate>
-                        {{ __('Orders') }}
+                        {{ __('Delivery') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('pharmacy')" :active="request()->routeIs('pharmacy','pharmacyDetails')" wire:navigate>
+                    <x-nav-link :href="route('sale')" :active="request()->routeIs('sale')" wire:navigate>
                         {{ __('Sales') }}
                     </x-nav-link>
                     @endrole
