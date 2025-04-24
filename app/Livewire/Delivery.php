@@ -11,10 +11,10 @@ class Delivery extends Component
     use WithPagination;
     public function render()
     {
-        $deliveries = \App\Models\Sale::whereHas('sale.product.pharmacy', function ($query) {
+        $deliveries = \App\Models\Delivery::whereHas('sale.product.pharmacy', function ($query) {
             $query->where('user_id', Auth::id());
         })
-            // ->with(['product', 'product.category'])
+            // ->with(['sale', 'sale.user'])
             ->paginate(5);
 
         return view('livewire.delivery', compact('deliveries'))

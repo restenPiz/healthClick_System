@@ -3,6 +3,7 @@
 use App\Livewire\AddProduct;
 use App\Livewire\Categories;
 use App\Livewire\Dashboard;
+use App\Livewire\Delivery;
 use App\Livewire\PaymentMethods;
 use App\Livewire\Pharmacy;
 use App\Livewire\PharmacyDashboard;
@@ -50,5 +51,7 @@ Route::get('/payment_methods', PaymentMethods::class)->name('payment_methods');
 
 //*Sale Route
 Route::get('/Sale', Sale::class)->name('sale');
+//*Delivery Route
+Route::get('/Delivery', Delivery::class)->name('delivery');
 
 require __DIR__.'/auth.php';

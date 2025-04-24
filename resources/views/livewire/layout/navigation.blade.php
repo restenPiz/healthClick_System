@@ -54,14 +54,14 @@ new class extends Component
                     <x-nav-link :href="route('product')" :active="request()->routeIs('product','addProduct')" wire:navigate>
                         {{ __('Product') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('pharmacy')" :active="request()->routeIs('pharmacy','pharmacyDetails')" wire:navigate>
+                    {{-- <x-nav-link :href="route('pharmacy')" :active="request()->routeIs('pharmacy','pharmacyDetails')" wire:navigate>
                         {{ __('Payment') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('pharmacy')" :active="request()->routeIs('pharmacy','pharmacyDetails')" wire:navigate>
-                        {{ __('Delivery') }}
-                    </x-nav-link>
+                    </x-nav-link> --}}
                     <x-nav-link :href="route('sale')" :active="request()->routeIs('sale')" wire:navigate>
                         {{ __('Sales') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('delivery')" :active="request()->routeIs('delivery')" wire:navigate>
+                        {{ __('Delivery') }}
                     </x-nav-link>
                     @endrole
                 </div>

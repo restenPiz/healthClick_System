@@ -1,3 +1,57 @@
 <div>
-    {{-- If your happiness depends on money, you will never be happy with yourself. --}}
+    <x-slot name="header">
+        <div class="flex items-center justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Delivery') }}
+            </h2>
+        </div>
+    </x-slot>
+
+    {{-- Start the main content --}}
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
+        <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
+            {{--?Alert--}}
+            <x-action-message class="me-3 bg-green-700 rounded text-white dark:text-white" on="pharmacy-added">
+                {{ __('Pharmacy added with successfuly') }}
+            </x-action-message>
+            <x-action-message class="me-3 bg-green-700 rounded text-white dark:text-white" on="pharmacy-updated">
+                {{ __('Pharmacy updated with successfuly') }}
+            </x-action-message>
+            <x-action-message class="me-3 bg-green-700 rounded text-white dark:text-white" on="pharmacy-deleted">
+                {{ __('Pharmacy deleted with successfuly') }}
+            </x-action-message>
+            {{--?End Alert--}}
+            <div style="margin-top:0.5rem"></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach ($deliveries as $delivery)
+                <div class="bg-white dark:bg-gray-900 rounded-xl shadow-md p-6 border border-gray-200 dark:border-gray-700">
+                    <h3 class="text-lg font-bold text-gray-800 dark:text-white">DELIVERY CODE DV{{ $delivery->id }}</h3>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                       Owner: {{ $delivery->sale->user->name}}
+                    </p>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                       Owner Email: {{ $delivery->sale->user->email}}
+                    </p>
+                    <p class=" mt-2 text-sm text-gray-600 dark:text-gray-300">
+                        Location: {{ $delivery->delivery_address}}
+                    </p>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                        Contact: +258 {{ $delivery->contact }}
+                    </p>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                        Status: @if ($delivery->status=='pendente')
+                        <span style="color:yellow">{{ $delivery->status }}</span>
+                        @else
+                        <span style="color:green">{{ $delivery->status }}</span>
+                        @endif
+                    </p>
+                    <div class=" mt-4 flex items-center space-x-4">
+                        {{--*Edit Button--}}
+                            <button type="submit" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Confirm</button>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
 </div>
