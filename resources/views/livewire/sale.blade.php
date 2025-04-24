@@ -123,6 +123,7 @@
                     </div>
                 </form>
             </x-modal>
+            {{--*End of modal--}}
         <br>
     </div>
     {{--*End Main Content--}}
