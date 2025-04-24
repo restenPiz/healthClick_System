@@ -18,6 +18,11 @@ return [
             'products' => 'c,r,u,d',
             'payment_methods' => 'r',
             'orders' => 'r,u',
+            'delivery' => 'c,r,u,d'
+        ],
+        'delivery' => [
+            'profile' => 'r,u',
+            'deliveries' => 'c,r,u,d',
         ],
     ],
 

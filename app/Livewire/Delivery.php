@@ -8,6 +8,7 @@ class Delivery extends Component
 {
     public function render()
     {
-        return view('livewire.delivery');
+        return view('livewire.delivery')
+            ->layout('layouts.app');
     }
 }
