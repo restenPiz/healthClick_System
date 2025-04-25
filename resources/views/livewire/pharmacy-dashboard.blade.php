@@ -79,7 +79,7 @@
                             3.0 lb.
                         </td>
                         <td class="flex items-center px-6 py-4">
-                           <a href="#" wire:click="confirmDeletion({{ $product->id }})"
+                           <a href="#" wire:click=""
                             x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
                             class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Delete</a>
                         </td>
