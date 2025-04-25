@@ -176,4 +176,13 @@ class ApiController extends Controller
 
         return response()->json(['message' => 'UID sincronizado com sucesso']);
     }
+    public function getDeliveryBySale($saleId)
+    {
+        $deliveries = Delivery::where('sale_id', $saleId)->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $deliveries
+        ]);
+    }
 }

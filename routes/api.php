@@ -23,7 +23,8 @@ Route::post('/payment', [ApiController::class, 'payment']);
 Route::get('/sales/{id}', [ApiController::class, 'sale']);
 //*Delivery Route
 Route::post('/deliveries', [ApiController::class, 'delivery']);
-
+//*Delivery Route - Get the sales
+Route::get('/delivery/{sale_id}', [ApiController::class, 'getDeliveryBySale']);
 //*Auth
 Route::post('/sync-firebase-uid', [ApiController::class, 'syncFirebaseUid']);
 
