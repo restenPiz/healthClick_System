@@ -82,7 +82,7 @@
                 </table>
                 <div class="mt-4 flex justify-center">
                     {{ $users->links() }}
-                </div>
+                </div><br>
             </div>
         </div>
     </div>

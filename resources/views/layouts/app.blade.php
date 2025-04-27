@@ -10,6 +10,8 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-o9N1jbd3L9x5H7bbP/H0tpUV1o6RzA2GDXbVmgePfXw=" crossorigin="" />
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -35,7 +37,14 @@
             </main>
         </div>
         @livewireScripts
-        {{--?Google Map Link--}}
+        
+        @assets
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-o9N1jbd3L9x5H7bbP/H0tpUV1o6RzA2GDXbVmgePfXw=" crossorigin=""></script>
+
         <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU6gQ1_MjMZOE35nYQ6-ovXw4er01wiuQ&callback=initMap"></script>
+    
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        @endassets
     </body>
 </html>

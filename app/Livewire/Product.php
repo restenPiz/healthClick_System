@@ -21,12 +21,12 @@ class Product extends Component
     public function render()
     {
         if (Auth::user()->hasRole('pharmacy')) {
-            $products = \App\Models\Product::where('pharmacy_id', $this->pharmacy_id)->paginate(5);
+            $products = \App\Models\Product::where('pharmacy_id', $this->pharmacy_id)->paginate(3);
             $categories = \App\Models\Category::all();
             return view('livewire.product', compact('products', 'categories'))
                 ->layout('layouts.app');
         } else {
-            $products = \App\Models\Product::paginate(5);
+            $products = \App\Models\Product::paginate(3);
             $categories = \App\Models\Category::all();
             return view('livewire.product', compact('products', 'categories'))
                 ->layout('layouts.app');

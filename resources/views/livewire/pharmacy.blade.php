@@ -249,6 +249,7 @@
     </x-modal>
 
     {{--?Script--}}
+    @script
     <script>
         let map;
         let marker;
@@ -286,7 +287,7 @@
             });
         }
     </script>
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU6gQ1_MjMZOE35nYQ6-ovXw4er01wiuQ&callback=initMap"></script>
+    @endscript
     
 
     {{-- End of the main content --}}

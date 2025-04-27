@@ -37,11 +37,7 @@
         </div>
     </div><br><br>
     
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-o9N1jbd3L9x5H7bbP/H0tpUV1o6RzA2GDXbVmgePfXw=" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-            integrity="sha256-o9N1jbd3L9x5H7bbP/H0tpUV1o6RzA2GDXbVmgePfXw=" crossorigin=""></script>
-
+    @script
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const latitude = {{ $pharmacy->latitude }};
@@ -58,4 +54,5 @@
                 .openPopup();
         });
     </script>
+    @endscript
 </div>

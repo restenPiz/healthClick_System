@@ -127,7 +127,7 @@
                 </table>
                 <div class="mt-4 flex justify-center">
                     {{ $products->links() }}
-                </div>
+                </div><br>
             </div>
         </div>
     </div>
@@ -293,7 +293,7 @@
             </table>
            <div class="mt-4 flex justify-center">
                 {{ $products->links() }}
-            </div>
+            </div><br>
         </div>
          <x-modal name="confirm-user-deletion" :show="$errors->isNotEmpty()" focusable>
             <form wire:submit.prevent="deleteProduct" class="p-6">
