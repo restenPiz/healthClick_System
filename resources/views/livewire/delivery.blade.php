@@ -12,19 +12,20 @@
         <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
             <div class="grid gap-6 md:grid-cols-3">
                 <div>
-                    <select id="countries" wire:model="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <select id="countries" wire:model.live="status" {{--wire:model="status"--}} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="">Select the option</option>
                         <option value="pendente">Pendente</option>
                         <option value="entregue">Entregue</option>
                     </select>
                 </div>
+                {{-- <div>
+                    <button wire:click="filter" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                        Filtrar
+                    </button>
+                </div> --}}
             </div>
         </div>
     </div>
-    <div>
-    <p class="text-sm text-gray-600 dark:text-gray-300">Status atual: {{ $status }}</p>
-</div>
-
     {{-- Start the main content --}}
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
         <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
