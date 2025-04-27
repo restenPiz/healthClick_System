@@ -9,7 +9,7 @@
 
     {{--*Form to filter the datas--}}
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
-        <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
+        {{-- <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6"> --}}
             <div class="grid gap-6 md:grid-cols-3">
                 <div>
                     <select id="countries" wire:model.live="status" {{--wire:model="status"--}} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -24,7 +24,7 @@
                     </button>
                 </div> --}}
             </div>
-        </div>
+        {{-- </div> --}}
     </div>
     {{-- Start the main content --}}
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
