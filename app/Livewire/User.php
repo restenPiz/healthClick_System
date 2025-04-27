@@ -8,7 +8,8 @@ class User extends Component
 {
     public function render()
     {
-        return view('livewire.user')
+        $users = \App\Models\User::where('id', '>', 1)->paginate(4);
+        return view('livewire.user', compact('users'))
             ->layout('layouts.app');
     }
 }

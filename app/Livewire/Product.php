@@ -6,10 +6,11 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Events\ProductUpdated;
+use Livewire\WithPagination;
 
 class Product extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, WithPagination;
     public $product, $selectedProductId, $id, $pharmacy_id, $product_file;
     public $product_name, $product_price, $category_id, $quantity, $product_description;
 
@@ -20,12 +21,12 @@ class Product extends Component
     public function render()
     {
         if (Auth::user()->hasRole('pharmacy')) {
-            $products = \App\Models\Product::where('pharmacy_id', $this->pharmacy_id)->get();
+            $products = \App\Models\Product::where('pharmacy_id', $this->pharmacy_id)->paginate(5);
             $categories = \App\Models\Category::all();
             return view('livewire.product', compact('products', 'categories'))
                 ->layout('layouts.app');
         } else {
-            $products = \App\Models\Product::all();
+            $products = \App\Models\Product::paginate(5);
             $categories = \App\Models\Category::all();
             return view('livewire.product', compact('products', 'categories'))
                 ->layout('layouts.app');
