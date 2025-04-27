@@ -10,16 +10,25 @@ class Delivery extends Component
 {
     use WithPagination;
     // public $deliveries;
+    public $status;
     public function render()
     {
-        $deliveries = \App\Models\Delivery::whereHas('sale.product.pharmacy', function ($query) {
+        $query = \App\Models\Delivery::whereHas('sale.product.pharmacy', function ($query) {
             $query->where('user_id', Auth::id());
-        })
-            // ->with(['sale', 'sale.user'])
-            ->paginate(5);
+        });
+
+        if (!empty($this->status)) {
+            $query->where('status', $this->status);
+        }
+
+        $deliveries = $query->paginate(5); // <-- ESSENCIAL!
 
         return view('livewire.delivery', compact('deliveries'))
             ->layout('layouts.app');
+    }
+    public function updatedStatus()
+    {
+        $this->resetPage();
     }
     public function confirmDelivery($deliveryId)
     {

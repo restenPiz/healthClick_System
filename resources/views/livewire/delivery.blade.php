@@ -7,6 +7,24 @@
         </div>
     </x-slot>
 
+    {{--*Form to filter the datas--}}
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
+        <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
+            <div class="grid gap-6 md:grid-cols-3">
+                <div>
+                    <select id="countries" wire:model="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="">Select the option</option>
+                        <option value="pendente">Pendente</option>
+                        <option value="entregue">Entregue</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+    <p class="text-sm text-gray-600 dark:text-gray-300">Status atual: {{ $status }}</p>
+</div>
+
     {{-- Start the main content --}}
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
         <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
@@ -54,5 +72,5 @@
                 @endforeach
             </div>
         </div>
-    </div>
+    </div><br><br>
 </div>
