@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Events\ProductUpdated;
@@ -18,10 +19,17 @@ class Product extends Component
     }
     public function render()
     {
-        $products = \App\Models\Product::where('pharmacy_id', $this->pharmacy_id)->get();
-        $categories = \App\Models\Category::all();
-        return view('livewire.product', compact('products', 'categories'))
-            ->layout('layouts.app');
+        if (Auth::user()->hasRole('pharmacy')) {
+            $products = \App\Models\Product::where('pharmacy_id', $this->pharmacy_id)->get();
+            $categories = \App\Models\Category::all();
+            return view('livewire.product', compact('products', 'categories'))
+                ->layout('layouts.app');
+        } else {
+            $products = \App\Models\Product::all();
+            $categories = \App\Models\Category::all();
+            return view('livewire.product', compact('products', 'categories'))
+                ->layout('layouts.app');
+        }
     }
     public function deleteProduct()
     {

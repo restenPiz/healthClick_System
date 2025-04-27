@@ -43,9 +43,9 @@ new class extends Component
                     <x-nav-link :href="route('user')" :active="request()->routeIs('user')" wire:navigate>
                         {{ __('Users') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('payment_methods')" :active="request()->routeIs('payment_methods')" wire:navigate>
+                    {{-- <x-nav-link :href="route('payment_methods')" :active="request()->routeIs('payment_methods')" wire:navigate>
                         {{ __('Payment Methods') }}
-                    </x-nav-link>
+                    </x-nav-link> --}}
                     @endrole
                     @role('pharmacy')
                     <x-nav-link :href="route('pharmacyDashboard')" :active="request()->routeIs('pharmacyDashboard')" wire:navigate>
