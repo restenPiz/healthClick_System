@@ -21,7 +21,7 @@
                     <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
                 </a> --}}
                 <a href="/" wire:navigate>
-                    <img src="./assets/saude.png" style="height: 15rem">
+                    <img src="../assets/saude.png" style="height: 15rem">
                 </a>
             </div>
 
@@ -29,5 +29,16 @@
                 {{ $slot }}
             </div>
         </div>
+        <script>
+            if (
+                localStorage.theme === 'dark' ||
+                (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+            ) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        </script>
     </body>
+
 </html>

@@ -13,6 +13,8 @@
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-o9N1jbd3L9x5H7bbP/H0tpUV1o6RzA2GDXbVmgePfXw=" crossorigin="" />
 
+        {{-- <link rel="stylesheet" href="{{ asset('build/assets/app-DMeha9a_.css') }}"> --}}
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
@@ -45,6 +47,20 @@
         <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU6gQ1_MjMZOE35nYQ6-ovXw4er01wiuQ&callback=initMap"></script>
     
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        
         @endassets
+    
+        <script>
+            if (
+                localStorage.theme === 'dark' ||
+                (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+            ) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        </script>
+        {{-- <script src="{{ asset('build/assets/app-BmE-7FdL.js') }}" defer></script>  --}}
     </body>
 </html>

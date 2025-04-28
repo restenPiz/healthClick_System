@@ -28,12 +28,12 @@ class AddProduct extends Component
     }
     public function save()
     {
-        $data = $this->validate([
+        $this->validate([
             'product_name' => 'required|string|max:255',
             'product_price' => 'required|numeric|min:0',
             'product_description' => 'required|string|max:255',
             'quantity' => 'required|integer|min:0',
-            'category_id' => 'required|exists:categories,id',
+            // 'category_id' => 'required|exists:categories,id',
             'pharmacy_id' => 'required|exists:pharmacies,id',
             'product_file' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);

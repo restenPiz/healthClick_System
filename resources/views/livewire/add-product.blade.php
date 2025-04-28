@@ -1,4 +1,4 @@
-@role('pharmacy')
+
 <div>
     <x-slot name="header">
         <div class="flex items-center justify-between">
@@ -28,7 +28,7 @@
             </x-action-message>
             {{--?End Alert--}}
             <div style="margin-top:0.5rem"></div>
-            <form wire:submit="save">
+            <form wire:submit.prevent="save">
                 <div class="grid gap-6 mb-6 md:grid-cols-2">
                     <div>
                         <label for="product_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Name</label>
@@ -44,7 +44,7 @@
                     </div>
                     <div>
                         <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-                        <select id="countries" wire:model="category_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <select wire:model="category_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="">Select the category</option>
                             @foreach ($categories as $category)
                                 <option value="{{$category->id}}">{{$category->category_name}}</option>
@@ -76,4 +76,3 @@
     </div><br><br>
     {{--?End the main content--}}
 </div>
-@endrole

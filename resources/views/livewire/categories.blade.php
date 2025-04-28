@@ -12,7 +12,7 @@
         <div class="flex flex-col lg:flex-row gap-6">
             <!-- Formulário de Adição/Atualização -->
             <div class="lg:w-1/2 bg-white dark:bg-gray-800 p-6 shadow rounded-lg">
-                <h2 class="text-xl text-gray-100 font-semibold mb-4">
+                <h2 class="text-xl dark:text-gray-300 font-semibold mb-4">
                  Add Category
                 </h2>
                 <form wire:submit.prevent="save">
@@ -49,7 +49,7 @@
                 </x-action-message>
                 <div style="margin-top:0.5rem"></div>
                 {{--?End Alert--}}
-                <h2 class="text-gray-100 text-xl font-semibold mb-4">Category Methods</h2>
+                <h2 class="dark:text-gray-300 text-xl font-semibold mb-4">Category Methods</h2>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                         <thead class="bg-gray-50 dark:bg-gray-700">
