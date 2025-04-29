@@ -38,6 +38,12 @@ class AddProduct extends Component
             'product_file' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
+        if ($this->product_file) {
+            $filePath = $this->product_file->store('product_files', 'public');
+        } else {
+            $filePath = null;
+        }
+
         Product::create([
             'product_name' => $this->product_name,
             'product_price' => $this->product_price,
@@ -45,7 +51,8 @@ class AddProduct extends Component
             'quantity' => $this->quantity,
             'category_id' => $this->category_id,
             'pharmacy_id' => $this->pharmacy_id,
-            'product_file' => $this->product_file->store('product_files', 'public'),
+            // 'product_file' => $this->product_file->store('product_files', 'public'),
+            'product_file' => $filePath,
         ]);
 
         // event(new ProductUpdated($product));
