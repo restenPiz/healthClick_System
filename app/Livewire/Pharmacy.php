@@ -60,7 +60,7 @@ class Pharmacy extends Component
             ];
 
             if ($this->pharmacy_file) {
-                $path = $this->pharmacy_file->store('pharmacy_files', 'public');
+                $path = $this->pharmacy_file->storeAs('pharmacy_files', 'public');
                 $pharmacyData['pharmacy_file'] = $path;
             }
 
@@ -102,6 +102,7 @@ class Pharmacy extends Component
         'pharmacy_name' => '',
         // 'pharmacy_location' => '',
         'pharmacy_contact' => '',
+        'pharmacy_file' => '',
     ];
     public function setPharmacyToEdit($id)
     {
@@ -111,8 +112,10 @@ class Pharmacy extends Component
             'pharmacy_name' => $pharmacy->pharmacy_name,
             // 'pharmacy_location' => $pharmacy->pharmacy_location,
             'pharmacy_contact' => $pharmacy->pharmacy_contact,
+            'pharmacy_file' => $pharmacy->pharmacy_file,
         ];
     }
+
 
     public function updatePharmacy()
     {
@@ -120,10 +123,21 @@ class Pharmacy extends Component
             'editPharmacy.pharmacy_name' => 'required|string|max:255',
             // 'editPharmacy.pharmacy_location' => 'required|string|max:255',
             'editPharmacy.pharmacy_contact' => 'required|string|max:255',
+            'editPharmacy.pharmacy_file' => 'nullable|image|max:1024', // Validação para imagem
         ]);
 
+        $pharmacyData = [
+            'pharmacy_name' => $this->editPharmacy['pharmacy_name'],
+            'pharmacy_contact' => $this->editPharmacy['pharmacy_contact'],
+        ];
+
+        // Processa o upload da imagem se uma nova for fornecida
+        if ($this->editPharmacy['pharmacy_file'] && !is_string($this->editPharmacy['pharmacy_file'])) {
+            $pharmacyData['pharmacy_file'] = $this->editPharmacy['pharmacy_file']->store('pharmacy_files', 'public');
+        }
+
         $pharmacy = \App\Models\Pharmacy::findOrFail($this->editPharmacy['id']);
-        $pharmacy->update($this->editPharmacy);
+        $pharmacy->update($pharmacyData);
 
         $this->reset([
             'pharmacy',
