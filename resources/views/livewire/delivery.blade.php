@@ -4,6 +4,11 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Delivery') }}
             </h2>
+            <button class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-indigo-700 transition"
+                x-data=""
+                x-on:click.prevent="$dispatch('open-modal', 'add-pharmacy')">
+                {{ __('+ Delivery User') }}
+            </button>
         </div>
     </x-slot>
 
