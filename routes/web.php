@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\AddDelivery;
 use App\Livewire\AddProduct;
 use App\Livewire\Categories;
 use App\Livewire\Dashboard;
@@ -53,5 +54,6 @@ Route::get('/payment_methods', PaymentMethods::class)->name('payment_methods');
 Route::get('/Sale', Sale::class)->name('sale');
 //*Delivery Route
 Route::get('/Delivery', Delivery::class)->name('delivery');
+Route::get('/addDelivery', AddDelivery::class)->name('addDelivery');
 
 require __DIR__.'/auth.php';

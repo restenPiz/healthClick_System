@@ -4,11 +4,10 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Delivery') }}
             </h2>
-            <button class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-indigo-700 transition"
-                x-data=""
-                x-on:click.prevent="$dispatch('open-modal', 'add-pharmacy')">
+            <a class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-indigo-700 transition"
+                href="{{route('addDelivery')}}" wire:navigate>
                 {{ __('+ Delivery User') }}
-            </button>
+        </a>
         </div>
     </x-slot>
 
@@ -33,7 +32,7 @@
     </div>
     {{-- Start the main content --}}
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
-        <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
+        <div class="{{--bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6---}}">
             {{--?Alert--}}
             <x-action-message class="me-3 bg-green-700 rounded text-white dark:text-white" on="delivery-updated">
                 {{ __('Product successfully delivered') }}

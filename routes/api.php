@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StripeController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,8 @@ Route::post('/deliveries', [ApiController::class, 'delivery']);
 Route::get('/delivery/{sale_id}', [ApiController::class, 'getDeliveryBySale']);
 //*Auth
 Route::post('/sync-firebase-uid', [ApiController::class, 'syncFirebaseUid']);
+
+Route::post('/stripe/create-checkout-session', [StripeController::class, 'createCheckoutSession']);
 
 Route::get('/user-by-firebase/{uid}', function ($uid) {
     $user = User::where('firebase_uid', $uid)->first();

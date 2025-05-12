@@ -65,7 +65,7 @@ x-data="{ open: false, darkMode: localStorage.theme === 'dark' || (!('theme' in 
                     <x-nav-link :href="route('sale')" :active="request()->routeIs('sale')" wire:navigate>
                         {{ __('Sales') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('delivery')" :active="request()->routeIs('delivery')" wire:navigate>
+                    <x-nav-link :href="route('delivery')" :active="request()->routeIs('delivery','addDelivery')" wire:navigate>
                         {{ __('Delivery') }}
                     </x-nav-link>
                     @endrole
