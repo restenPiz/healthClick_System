@@ -278,6 +278,13 @@
 
     {{--?Script--}}
     @script
+
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-o9N1jbd3L9x5H7bbP/H0tpUV1o6RzA2GDXbVmgePfXw=" crossorigin=""></script>
+
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU6gQ1_MjMZOE35nYQ6-ovXw4er01wiuQ&callback=initMap"></script>
+
     <script>
         let map;
         let marker;
@@ -315,8 +322,8 @@
             });
         }
     </script>
-    @endscript
     
+    @endscript
 
     {{-- End of the main content --}}
 </div>

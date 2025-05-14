@@ -61,6 +61,7 @@
                 document.documentElement.classList.remove('dark');
             }
         </script>
+
         {{-- <script src="{{ asset('build/assets/app-BmE-7FdL.js') }}" defer></script>  --}}
     </body>
 </html>
