@@ -15,67 +15,7 @@ use Exception;
 
 class StripeController extends Controller
 {
-    // public function createCheckoutSession(Request $request)
-    // {
-    // \Illuminate\Support\Facades\Log::info('🧾 Dados recebidos do Flutter:', $request->all());
-
-    // $validated = $request->validate([
-    //     'items' => 'required|array',
-    //     'items.*.name' => 'required|string',
-    //     'items.*.price' => 'required|numeric',
-    //     'items.*.quantity' => 'required|integer',
-    //     'currency' => 'required|string',
-    // ]);
-
-    // Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
-
-    // $expParts = explode('/', $request->exp);
-    // if (count($expParts) !== 2) {
-    //     return response()->json([
-    //         'success' => false,
-    //         'message' => 'Formato de validade inválido. Use MM/YY.',
-    //     ], 422);
-    // }
-
-    // $expMonth = trim($expParts[0]);
-    // $expYear = '20' . trim($expParts[1]);
-
-    // try {
-    //     // Criar token com os dados do cartão
-    //     $token = Token::create([
-    //         'card' => [
-    //             'number' => str_replace(' ', '', $request->card_number),
-    //             'exp_month' => $expMonth,
-    //             'exp_year' => $expYear,
-    //             'cvc' => $request->cvc,
-    //             'address_zip' => $request->postal_code,
-    //         ],
-    //     ]);
-
-    //     // Criar cobrança
-    //     $charge = Charge::create([
-    //         'amount' => $request->amount,
-    //         'currency' => strtolower($request->currency),
-    //         'source' => $token->id,
-    //         'receipt_email' => $request->email,
-    //         'description' => 'Pagamento via app Flutter',
-    //     ]);
-
-    //     return response()->json([
-    //         'success' => true,
-    //         'message' => '✅ Pagamento efetuado com sucesso!',
-    //         'charge_id' => $charge->id,
-    //     ]);
-    // } catch (Exception $e) {
-    //     \Illuminate\Support\Facades\Log::error('❌ Erro no pagamento Stripe: ' . $e->getMessage());
-
-    //     return response()->json([
-    //         'success' => false,
-    //         'message' => 'Erro ao processar pagamento: ' . $e->getMessage(),
-    //     ], 500);
-    // }
-    // }
-    public function createPaymentIntent(Request $request)
+    public function createCheckoutSession(Request $request)
     {
         try {
             Log::info('📥 Requisição recebida para criar Payment Intent:', $request->all());
@@ -145,65 +85,56 @@ class StripeController extends Controller
         try {
             Log::info('📥 Requisição recebida para confirmar pagamento:', $request->all());
 
-            // Validação dos dados
             $validated = $request->validate([
                 'payment_intent_id' => 'required|string',
                 'firebase_uid' => 'required|string',
                 'items' => 'required|array',
             ]);
 
-            // Definir chave secreta do Stripe
             Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
 
-            // Recuperar o Payment Intent
             $paymentIntent = PaymentIntent::retrieve($request->payment_intent_id);
 
-            // Verificar status do pagamento
-            if ($paymentIntent->status === 'succeeded') {
-                $user = User::where('firebase_uid', $request->firebase_uid)->first();
-
-                if (!$user) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Usuário com este Firebase UID não encontrado.'
-                    ], 404);
-                }
-
-                // Processar vendas e atualizar estoque
-                foreach ($request->items as $item) {
-                    $product = Product::where('product_name', trim($item['name']))->first();
-
-                    if ($product) {
-                        Sale::create([
-                            'user_id' => $user->id,
-                            'product_id' => $product->id,
-                            'quantity' => $item['quantity'],
-                            'price' => $item['price'],
-                            'sold_at' => now(),
-                        ]);
-
-                        $product->quantity -= $item['quantity'];
-                        $product->save();
-                    } else {
-                        Log::warning('⚠️ Produto não encontrado:', ['name' => $item['name']]);
-                    }
-                }
-
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Pagamento processado com sucesso.',
-                    'transaction_id' => $paymentIntent->id,
-                ]);
-            } else {
-                Log::warning('❌ Pagamento não foi concluído:', ['status' => $paymentIntent->status]);
-
+            if ($paymentIntent->status !== 'succeeded') {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Pagamento não foi concluído. Status: ' . $paymentIntent->status
+                    'message' => 'O pagamento ainda não foi concluído.'
                 ], 400);
             }
+
+            // Verificar se o pagamento já foi registrado (evitar duplicação)
+            if (Sale::where('stripe_payment_id', $paymentIntent->id)->exists()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Pagamento já registrado anteriormente.'
+                ]);
+            }
+
+            // Buscar o usuário (se existir)
+            $user = User::where('firebase_uid', $request->firebase_uid)->first();
+
+            // Registrar a venda
+            foreach ($request->items as $item) {
+                $product = Product::where('name', $item['name'])->first();
+
+                Sale::create([
+                    'user_id' => $user?->id,
+                    'product_id' => $product?->id,
+                    'quantity' => $item['quantity'],
+                    'total_price' => $item['price'] * $item['quantity'],
+                    'stripe_payment_id' => $paymentIntent->id,
+                    'status' => 'Pago',
+                ]);
+            }
+
+            Log::info('✅ Venda registrada com sucesso para o pagamento: ' . $paymentIntent->id);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Pagamento confirmado e vendas registradas.'
+            ]);
         } catch (Exception $e) {
-            Log::error('🔥 Erro ao confirmar pagamento:', [
+            Log::error('🔥 Erro ao confirmar o pagamento:', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);

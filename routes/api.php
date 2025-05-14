@@ -29,7 +29,9 @@ Route::get('/delivery/{sale_id}', [ApiController::class, 'getDeliveryBySale']);
 //*Auth
 Route::post('/sync-firebase-uid', [ApiController::class, 'syncFirebaseUid']);
 
+//*Stripe payment
 Route::post('/stripe/create-checkout-session', [StripeController::class, 'createCheckoutSession']);
+Route::post('/stripe/confirm-payment', [StripeController::class, 'confirmPayment']);
 
 Route::get('/user-by-firebase/{uid}', function ($uid) {
     $user = User::where('firebase_uid', $uid)->first();
