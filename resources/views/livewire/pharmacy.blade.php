@@ -230,12 +230,12 @@
                 <x-input-error :messages="$errors->get('pharmacy_contact')" class="mt-2" />
             </div>
 
-            <div class="mt-4">
+            {{-- <div class="mt-4">
                 <x-input-label for="pharmacy_location" value="{{ __('Pharmacy Location') }}" />
                 <input type="hidden" wire:model.defer="pharmacy_location" id="pharmacy_location">
                 <div id="map" class="mt-2 h-64 w-full rounded-md border border-gray-300"></div>
                 <x-input-error :messages="$errors->get('pharmacy_location')" class="mt-2" />
-            </div>
+            </div> --}}
             <div class="mt-4">
                 <x-input-label for="pharmacy_file" value="{{ __('Image') }}" />
                 <div class="flex items-center justify-center w-full">
@@ -276,54 +276,47 @@
         </form>
     </x-modal>
 
-    {{--?Script--}}
     @script
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-o9N1jbd3L9x5H7bbP/H0tpUV1o6RzA2GDXbVmgePfXw=" crossorigin=""></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU6gQ1_MjMZOE35nYQ6-ovXw4er01wiuQ&callback=initMap"></script>
+<script>
+    let map;
+    let marker;
 
-    
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-            integrity="sha256-o9N1jbd3L9x5H7bbP/H0tpUV1o6RzA2GDXbVmgePfXw=" crossorigin=""></script>
+    window.initMap = function () {
+        // Localização padrão (ex: Beira, Moçambique)
+        const initialLatLng = { lat: -19.8333, lng: 34.8500 };
 
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU6gQ1_MjMZOE35nYQ6-ovXw4er01wiuQ&callback=initMap"></script>
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: initialLatLng,
+            zoom: 13,
+        });
 
-    <script>
-        let map;
-        let marker;
+        map.addListener("click", (e) => {
+            const lat = e.latLng.lat().toFixed(6);
+            const lng = e.latLng.lng().toFixed(6);
 
-        window.initMap = function () {
-            // Localização padrão (ex: Beira, Moçambique)
-            const initialLatLng = { lat: -19.8333, lng: 34.8500 };
+            // Atualiza o campo de localização no formulário
+            const input = document.getElementById("pharmacy_location");
+            input.value = `${lat},${lng}`;
+            input.dispatchEvent(new Event('input'));
 
-            map = new google.maps.Map(document.getElementById("map"), {
-                center: initialLatLng,
-                zoom: 13,
-            });
+            // Atualiza o Livewire (se necessário)
+            Livewire.find('{{ $this->id }}').set('pharmacy_location', `${lat},${lng}`);
 
-            map.addListener("click", (e) => {
-                const lat = e.latLng.lat().toFixed(6);
-                const lng = e.latLng.lng().toFixed(6);
+            // Adiciona ou move o marcador
+            if (!marker) {
+                marker = new google.maps.Marker({
+                    position: e.latLng,
+                    map: map,
+                });
+            } else {
+                marker.setPosition(e.latLng);
+            }
+        });
+    }
+</script>
+@endscript
 
-                // Atualiza o campo de localização no formulário
-                const input = document.getElementById("pharmacy_location");
-                input.value = `${lat},${lng}`;
-                input.dispatchEvent(new Event('input'));
-
-                // Atualiza o Livewire (se necessário)
-                Livewire.find('{{ $this->id }}').set('pharmacy_location', `${lat},${lng}`);
-
-                // Adiciona ou move o marcador
-                if (!marker) {
-                    marker = new google.maps.Marker({
-                        position: e.latLng,
-                        map: map,
-                    });
-                } else {
-                    marker.setPosition(e.latLng);
-                }
-            });
-        }
-    </script>
-    
-    @endscript
-
-    {{-- End of the main content --}}
 </div>
+  

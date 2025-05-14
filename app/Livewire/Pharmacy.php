@@ -37,7 +37,7 @@ class Pharmacy extends Component
             'password' => 'required|string|min:6|max:255',
             //?Pharmacy Data
             'pharmacy_name' => 'required|string|max:255',
-            'pharmacy_location' => 'required|string|max:255',
+            // 'pharmacy_location' => 'required|string|max:255',
             'pharmacy_description' => 'required|string|max:255',
             'pharmacy_contact' => 'required|string|max:255',
             'pharmacy_file' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048',
@@ -53,7 +53,7 @@ class Pharmacy extends Component
 
             $pharmacyData = [
                 'pharmacy_name' => $data['pharmacy_name'],
-                'pharmacy_location' => $data['pharmacy_location'],
+                // 'pharmacy_location' => $data['pharmacy_location'],
                 'pharmacy_description' => $data['pharmacy_description'],
                 'pharmacy_contact' => $data['pharmacy_contact'],
                 'user_id' => $user->id,
@@ -72,7 +72,7 @@ class Pharmacy extends Component
             'email',
             'password',
             'pharmacy_name',
-            'pharmacy_location',
+            // 'pharmacy_location',
             'pharmacy_description',
             'pharmacy_contact',
             'pharmacy_file',

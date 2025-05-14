@@ -47,8 +47,6 @@
         <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBU6gQ1_MjMZOE35nYQ6-ovXw4er01wiuQ&callback=initMap"></script>
     
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-        
         @endassets
     
         <script>
@@ -61,6 +59,8 @@
                 document.documentElement.classList.remove('dark');
             }
         </script>
+
+        
 
         {{-- <script src="{{ asset('build/assets/app-BmE-7FdL.js') }}" defer></script>  --}}
     </body>
