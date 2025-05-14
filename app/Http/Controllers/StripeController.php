@@ -77,13 +77,11 @@ class StripeController extends Controller
         }
     }
 
-    /**
-     * Confirmar pagamento e processar vendas (segunda etapa)
-     */
     public function confirmPayment(Request $request)
     {
         try {
             Log::info('📥 Requisição recebida para confirmar pagamento:', $request->all());
+            Log::info('🔍 Firebase UID recebido:', ['firebase_uid' => $request->firebase_uid]);
 
             $validated = $request->validate([
                 'payment_intent_id' => 'required|string',
@@ -115,13 +113,13 @@ class StripeController extends Controller
 
             // Registrar a venda
             foreach ($request->items as $item) {
-                $product = Product::where('name', $item['name'])->first();
+                $product = Product::where('product_name', $item['name'])->first();
 
                 Sale::create([
                     'user_id' => $user?->id,
                     'product_id' => $product?->id,
                     'quantity' => $item['quantity'],
-                    'total_price' => $item['price'] * $item['quantity'],
+                    'price' => $item['price'] * $item['quantity'],
                     'stripe_payment_id' => $paymentIntent->id,
                     'status' => 'Pago',
                 ]);
