@@ -60,7 +60,7 @@ class Pharmacy extends Component
             ];
 
             if ($this->pharmacy_file) {
-                $path = $this->pharmacy_file->storeAs('pharmacy_files', 'public');
+                $path = $this->pharmacy_file->store('pharmacy_files', 'public');
                 $pharmacyData['pharmacy_file'] = $path;
             }
 

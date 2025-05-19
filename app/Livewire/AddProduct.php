@@ -28,7 +28,6 @@ class AddProduct extends Component
     }
     public function save()
     {
-        // dd($this->all());
         $this->validate([
             'product_name' => 'required|string|max:255',
             'product_price' => 'required|numeric|min:0',

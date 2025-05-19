@@ -123,6 +123,10 @@ class StripeController extends Controller
                     'stripe_payment_id' => $paymentIntent->id,
                     'status' => 'Pago',
                 ]);
+
+                //*Method to decrease the quantity of product
+                $product->quantity -= $item['quantity'];
+                $product->save();
             }
 
             Log::info('✅ Venda registrada com sucesso para o pagamento: ' . $paymentIntent->id);
